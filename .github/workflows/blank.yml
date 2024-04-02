@@ -2,9 +2,11 @@ name: CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches:
+      - master
   pull_request:
-    branches: [ "master" ]
+    branches:
+      - master
 
 jobs:
   build:
@@ -12,12 +14,12 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
       - name: Set up Java
         uses: actions/setup-java@v2
         with:
-          java-version: '17'
+          java-version: '17' # Set your desired Java version here
 
       - name: Cache Gradle packages
         uses: actions/cache@v2
@@ -25,6 +27,8 @@ jobs:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
 
-      - name: Run Gradle Build
-        run: |
-          ./gradlew build
+      - name: Build with Gradle
+        run: ./gradlew build --no-daemon --console=plain
+
+      - name: Run Tests
+        run: ./gradlew test --no-daemon --console=plain
