@@ -25,7 +25,8 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
 
       - name: Build with Gradle
-        run: ./gradlew.bat build
+        run: cmd /c gradlew build
+
 
       - name: Run Tests
         run: ./gradlew test --no-daemon --console=plain
